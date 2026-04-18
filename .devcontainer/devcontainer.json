@@ -1,0 +1,57 @@
+{
+  "name": "Go Development",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "rest-api",
+  "workspaceFolder": "/app",
+
+  // VSCode settings for Go development
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "golang.Go",
+        "golangci-lint.golangci-lint-vs-code",
+        "ms-vscode.makefile-tools"
+      ],
+      "settings": {
+        "go.lintOnSave": "package",
+        "go.lintTool": "golangci-lint",
+        "go.lintFlags": [
+          "--fast"
+        ],
+        "[go]": {
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+          },
+          "editor.defaultFormatter": "golang.Go"
+        },
+        "[go.mod]": {
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+          }
+        },
+        "go.useLanguageServer": true,
+        "gopls": {
+          "ui.semanticTokens": true,
+          "ui.completion.usePlaceholders": true
+        }
+      }
+    }
+  },
+
+  // Forward environment to container
+  "remoteEnv": {
+    "GOOS": "linux",
+    "GOARCH": "amd64"
+  },
+
+  // Mounts for persistent caches
+  "mounts": [
+    "source=go-modules,target=/go/pkg/mod,type=volume",
+    "source=go-build-cache,target=/root/.cache/go-build,type=volume"
+  ],
+
+  // Run these commands after the container starts
+  "postCreateCommand": "go version && curl -L https://opencode.ai/install.sh | sh"
+}

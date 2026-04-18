@@ -1,0 +1,27 @@
+services:
+  rest-api:
+    build: .
+    container_name: rest-api-dev
+    volumes:
+      # Monta el directorio actual para acceder a tus archivos Go
+      - .:/app
+      # Monta el cache de Go modules para mejor rendimiento
+      - go-modules:/go/pkg/mod
+      # Monta el cache de build para mejor rendimiento
+      - go-build-cache:/root/.cache/go-build
+      # Directorio para la base de datos SQLite
+      - sqlite-data:/app/data
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    # Mantiene el contenedor ejecutándose
+    command: tail -f /dev/null
+    environment:
+      - GOOS=linux
+      - GOARCH=amd64
+      - CGO_ENABLED=1
+
+volumes:
+  go-modules:
+  go-build-cache:
+  sqlite-data:
