@@ -50,6 +50,7 @@ func createTables() {
 	`
 
 	_, err = DB.Exec(createEventTable)
+
 	if err != nil {
 		panic("Could not create events table")
 	}
