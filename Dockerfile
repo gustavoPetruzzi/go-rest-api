@@ -16,6 +16,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Crear directorio de trabajo
 WORKDIR /app
 
+EXPOSE 8080
+
 # Instalar herramientas de desarrollo Go
 # Necesitamos CGO_ENABLED=1 durante la instalación de herramientas
 RUN CGO_ENABLED=1 go install github.com/go-delve/delve/cmd/dlv@latest && \

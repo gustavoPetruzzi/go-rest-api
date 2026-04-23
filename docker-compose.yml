@@ -2,6 +2,8 @@ services:
   rest-api:
     build: .
     container_name: rest-api-dev
+    ports:
+      - "8080:8080"
     volumes:
       # Monta el directorio actual para acceder a tus archivos Go
       - .:/app
